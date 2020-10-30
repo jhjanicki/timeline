@@ -1,11 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
 import './App.css';
-import Timeline from "./Timeline";
 import * as d3 from "d3";
 
-import {event} from 'd3-zoom'
 
  function App () {
+   const [zoomLevel, setZoomLevel] = useState()
   const height = 800;
   const width = 5000;
   
@@ -15,10 +14,17 @@ import {event} from 'd3-zoom'
 
   const epochs = [
     { from: 0,    duration: 1000, end: 1000 },
-    { from: 1000, duration: 1500, end: 2500 },
-    { from: 2500, duration: 500, end: 3000 },
+    { from: 1000, duration: 1500, end: 2500},
+    { from: 2500, duration: 500, end: 3000},
     { from: 3000, duration: 500, end: 3500 },
     { from: 3500, duration: 1500, end: 5000 }
+  ]
+
+  const descriptionData  = [
+
+    {time: 1000, text: 'some sdlfjasdf'},
+    {time: 2000, text: 'some sdlfjasdf'},
+    {time: 3000, text: 'some sdlfjasdf'}
   ]
 
   const eventLabelsData = [
@@ -65,6 +71,21 @@ function drawTimeline() {
       .on('click', (event) => {
         console.log('Clicked', event)
       })
+
+  const description =  svg.selectAll('description').data(descriptionData).join('g')      
+    .attr('transform',  (d) => 'translate(0,0)')
+    .attr('class', 'description')
+
+      description
+      .append('text')
+      .text(d=> d.text)
+      .attr('x', ({time})=> time)
+      .attr('y', height/2)
+      .attr('font-size', 60)
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+
+
   
   const groupEventLabels = svg.append('g')
     .attr('class', 'event-labels')
@@ -142,9 +163,15 @@ function drawTimeline() {
     .translateExtent(translateExtent)
     .on('zoom', (event) => {
       const {k, x, y} = event.transform
+      setZoomLevel(k)
       g.attr('transform', 'translate(' + x + ' 0) scale(' + (k) + ' 1)')
       eventLabels.attr('transform', ({time}) => 'translate(' + (x + time * k) + ' '+ 10 +')')
       timeLabels.attr('transform', ({time}) => 'translate(' + (x + time * k) + ' '+ 10 +')')
+      const descriptionOpacity = k > 1.3 ? 1 : 0
+      console.log('descriptionOpacity:', descriptionOpacity)
+      description.attr('transform', ({time}) => 'translate(' + (x + time * k) + ' '+ 10 +')').attr('opacity', descriptionOpacity)
+
+
     })
 
     svg.call(zoom)
