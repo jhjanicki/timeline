@@ -93,14 +93,6 @@ function App() {
       )
 
     timeLabels
-      .append('circle')
-      .attr('cx', 0)
-      .attr('cy', height - 20)
-      .attr('r', 1.5)
-      .attr('transform-origin', '50% 50%')
-      .attr('fill', 'black')
-
-    timeLabels
       .append('text')
       .attr('x', 10)
       .attr('y', height - 20)
@@ -137,14 +129,6 @@ function App() {
         'transform',
         ({ time }) => `translate(${time * globalScale},${height / 2})`
       )
-
-    eventLabels
-      .append('circle')
-      .attr('cx', 0)
-      .attr('cy', 20)
-      .attr('r', 1.5)
-      .attr('transform-origin', '50% 50%')
-      .attr('fill', 'black')
 
     eventLabels
       .append('text')
