@@ -99,7 +99,7 @@ function App() {
       .join('g')
       .attr(
         'transform',
-        ({ time }) => 'translate(' + time * globalScale + ' ' + height / 2 + ')'
+        ({ time }) => `translate(${time * globalScale},${height / 2})`
       )
 
     eventLabels
@@ -142,7 +142,7 @@ function App() {
       .join('g')
       .attr(
         'transform',
-        ({ time }) => 'translate(' + time * globalScale + ' ' + height / 2 + ')'
+        ({ time }) => `translate(${time * globalScale},${height / 2})`
       )
 
     timeLabels
@@ -182,25 +182,19 @@ function App() {
       .on('zoom', (event) => {
         const { k, x, y } = event.transform
         setZoomLevel(k)
-        rectanglesGroup.attr(
-          'transform',
-          'translate(' + x + ' 0) scale(' + k + ' 1)'
-        )
+        rectanglesGroup.attr('transform', `translate(${x}, 0) scale(${k}, 1)`)
         eventLabels.attr(
           'transform',
-          ({ time }) => 'translate(' + (x + time * k) + ' ' + 10 + ')'
+          ({ time }) => `translate(${x + time * k},10)`
         )
         timeLabels.attr(
           'transform',
-          ({ time }) => 'translate(' + (x + time * k) + ' ' + 10 + ')'
+          ({ time }) => `translate(${x + time * k}, 10 )`
         )
         const descriptionOpacity = k > 1.3 ? 1 : 0
 
         description
-          .attr(
-            'transform',
-            ({ time }) => 'translate(' + (x + time * k) + ' ' + 10 + ')'
-          )
+          .attr('transform', ({ time }) => `translate(${x + time * k}, 10 )`)
           .attr('opacity', descriptionOpacity)
       })
 
