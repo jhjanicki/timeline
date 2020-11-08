@@ -41,17 +41,6 @@ function App() {
     { time: 5000, text: 'Present' },
   ]
 
-  const extent = [
-    [0, 0],
-    [954, 0],
-  ]
-
-  const scaleExtent = [0.1908, 2]
-  const translateExtent = [
-    [0, 0],
-    [5000, 0],
-  ]
-
   function drawTimeline() {
     const globalScale = width / 5000
 
@@ -164,6 +153,18 @@ function App() {
     // ------------------------------------------------------------------------------
     // ZOOM
     // ------------------------------------------------------------------------------
+
+    const extent = [
+      [0, 0],
+      [954, 0],
+    ]
+
+    const scaleExtent = [0.1908, 2]
+
+    const translateExtent = [
+      [-(width * 2), 0], // [x0, y0] top left corner ... not sure why it needs to be this but seems to center it when you zoom out
+      [width, 0], // [x1, y1] bottom right corner
+    ]
     const zoom = d3
       .zoom()
       .extent(extent)
