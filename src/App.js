@@ -159,7 +159,7 @@ function App() {
       [954, 0],
     ]
 
-    const scaleExtent = [0.1908, 2]
+    const scaleExtent = [0.1908, 2] // limits amount you can zoom in and out
 
     const translateExtent = [
       [-(width * 2), 0], // [x0, y0] top left corner ... not sure why it needs to be this but seems to center it when you zoom out
