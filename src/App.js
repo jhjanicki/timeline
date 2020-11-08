@@ -56,6 +56,9 @@ function App() {
     const globalScale = width / 5000
 
     const svg = d3.select('svg').attr('viewBox', [0, 0, width, height * 2])
+    // ------------------------------------------------------------------------------
+    // RECTANGLES
+    // ------------------------------------------------------------------------------
 
     const rectanglesGroup = svg.append('g').attr('cursor', 'grab')
 
@@ -71,65 +74,9 @@ function App() {
       .on('click', (event) => {
         console.log('Clicked', event)
       })
-
-    const description = svg
-      .selectAll('description')
-      .data(descriptionData)
-      .join('g')
-      .attr('transform', (d) => 'translate(0,0)')
-      .attr('class', 'description')
-
-    description
-      .append('text')
-      .text((d) => d.text)
-      .attr('x', ({ time }) => time)
-      .attr('y', height / 2)
-      .attr('font-size', 60)
-      .attr('text-anchor', 'middle')
-      .attr('alignment-baseline', 'middle')
-
-    const groupEventLabels = svg
-      .append('g')
-      .attr('class', 'event-labels')
-      .attr('cursor', 'grab')
-
-    const eventLabels = groupEventLabels
-      .selectAll('event-labels')
-      .data(eventLabelsData)
-      .join('g')
-      .attr(
-        'transform',
-        ({ time }) => `translate(${time * globalScale},${height / 2})`
-      )
-
-    eventLabels
-      .append('circle')
-      .attr('cx', 0)
-      .attr('cy', 20)
-      .attr('r', 1.5)
-      .attr('transform-origin', '50% 50%')
-      .attr('fill', 'black')
-
-    eventLabels
-      .append('text')
-      .attr('x', 10)
-      .attr('y', 20)
-      .attr('text-anchor', 'start')
-      .attr('alignment-baseline', 'middle')
-      .text((d) => d.text)
-      .attr('font-family', 'Verdana, sans-serif')
-      .attr('font-size', '60px')
-      .attr('fill', 'black')
-
-    eventLabels
-      .append('rect')
-      .attr('x', -0.5)
-      .attr('y', 0)
-      .attr('width', 1)
-      .attr('height', height * 0.8)
-      .attr('stroke', 'black')
-      .attr('stroke-width', 0)
-      .attr('fill', 'black')
+    // ------------------------------------------------------------------------------
+    // TIME LABELS
+    // ------------------------------------------------------------------------------
 
     const groupTimeLabels = svg
       .append('g')
@@ -174,6 +121,74 @@ function App() {
       .attr('stroke-width', 0)
       .attr('fill', 'black')
 
+    // ------------------------------------------------------------------------------
+    // EVENT LABELS
+    // ------------------------------------------------------------------------------
+    const groupEventLabels = svg
+      .append('g')
+      .attr('class', 'event-labels')
+      .attr('cursor', 'grab')
+
+    const eventLabels = groupEventLabels
+      .selectAll('event-labels')
+      .data(eventLabelsData)
+      .join('g')
+      .attr(
+        'transform',
+        ({ time }) => `translate(${time * globalScale},${height / 2})`
+      )
+
+    eventLabels
+      .append('circle')
+      .attr('cx', 0)
+      .attr('cy', 20)
+      .attr('r', 1.5)
+      .attr('transform-origin', '50% 50%')
+      .attr('fill', 'black')
+
+    eventLabels
+      .append('text')
+      .attr('x', 10)
+      .attr('y', 20)
+      .attr('text-anchor', 'start')
+      .attr('alignment-baseline', 'middle')
+      .text((d) => d.text)
+      .attr('font-family', 'Verdana, sans-serif')
+      .attr('font-size', '60px')
+      .attr('fill', 'black')
+
+    eventLabels
+      .append('rect')
+      .attr('x', -0.5)
+      .attr('y', 0)
+      .attr('width', 1)
+      .attr('height', height * 0.8)
+      .attr('stroke', 'black')
+      .attr('stroke-width', 0)
+      .attr('fill', 'black')
+
+    // ------------------------------------------------------------------------------
+    // DESCRIPTIONS
+    // ------------------------------------------------------------------------------
+    const description = svg
+      .selectAll('description')
+      .data(descriptionData)
+      .join('g')
+      .attr('transform', (d) => 'translate(0,0)')
+      .attr('class', 'description')
+
+    description
+      .append('text')
+      .text((d) => d.text)
+      .attr('x', ({ time }) => time)
+      .attr('y', height / 2)
+      .attr('font-size', 60)
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+
+    // ------------------------------------------------------------------------------
+    // ZOOM
+    // ------------------------------------------------------------------------------
     const zoom = d3
       .zoom()
       .extent(extent)
