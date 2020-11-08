@@ -87,10 +87,6 @@ function App() {
       .selectAll('time-labels')
       .data(timeLabelsData)
       .join('g')
-      .attr(
-        'transform',
-        ({ time }) => `translate(${time * globalScale},${height / 2})`
-      )
 
     timeLabels
       .append('text')
@@ -125,10 +121,6 @@ function App() {
       .selectAll('event-labels')
       .data(eventLabelsData)
       .join('g')
-      .attr(
-        'transform',
-        ({ time }) => `translate(${time * globalScale},${height / 2})`
-      )
 
     eventLabels
       .append('text')
@@ -158,7 +150,6 @@ function App() {
       .selectAll('description')
       .data(descriptionData)
       .join('g')
-      .attr('transform', (d) => 'translate(0,0)')
       .attr('class', 'description')
 
     description
