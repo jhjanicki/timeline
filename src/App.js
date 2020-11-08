@@ -20,13 +20,13 @@ function App() {
     { from: 3500, duration: 1500, end: 5000 },
   ]
 
-  const descriptionData = [
+  const levelTwoLabelsData = [
     { time: 1000, text: 'some sdlfjasdf' },
     { time: 2000, text: 'some sdlfjasdf' },
     { time: 3000, text: 'some sdlfjasdf' },
   ]
 
-  const eventLabelsData = [
+  const levelOneData = [
     { time: 0, text: 'Point 1' },
     { time: 2500, text: 'Point 2' },
     { time: 3500, text: 'Point 3' },
@@ -99,19 +99,19 @@ function App() {
       .attr('fill', 'black')
 
     // ------------------------------------------------------------------------------
-    // EVENT LABELS
+    // LEVEL ONE LABELS
     // ------------------------------------------------------------------------------
-    const groupEventLabels = svg
+    const levelOneGroups = svg
       .append('g')
       .attr('class', 'event-labels')
       .attr('cursor', 'grab')
 
-    const eventLabels = groupEventLabels
+    const levelOneLabels = levelOneGroups
       .selectAll('event-labels')
-      .data(eventLabelsData)
+      .data(levelOneData)
       .join('g')
 
-    eventLabels
+    levelOneLabels
       .append('text')
       .attr('x', 10)
       .attr('y', 20)
@@ -122,7 +122,7 @@ function App() {
       .attr('font-size', '60px')
       .attr('fill', 'black')
 
-    eventLabels
+    levelOneLabels
       .append('rect')
       .attr('x', -0.5)
       .attr('y', 0)
@@ -133,15 +133,15 @@ function App() {
       .attr('fill', 'black')
 
     // ------------------------------------------------------------------------------
-    // DESCRIPTIONS
+    // LEVEL TWO LABELS
     // ------------------------------------------------------------------------------
-    const description = svg
-      .selectAll('description')
-      .data(descriptionData)
+    const levelTwoLabels = svg
+      .selectAll('levelTwoLabels')
+      .data(levelTwoLabelsData)
       .join('g')
-      .attr('class', 'description')
+      .attr('class', 'levelTwoLabels')
 
-    description
+    levelTwoLabels
       .append('text')
       .text((d) => d.text)
       .attr('x', ({ time }) => time)
@@ -174,7 +174,7 @@ function App() {
         const { k, x, y } = event.transform
         setZoomLevel(k)
         rectanglesGroup.attr('transform', `translate(${x}, 0) scale(${k}, 1)`)
-        eventLabels.attr(
+        levelOneLabels.attr(
           'transform',
           ({ time }) => `translate(${x + time * k},10)`
         )
@@ -182,11 +182,11 @@ function App() {
           'transform',
           ({ time }) => `translate(${x + time * k}, 10 )`
         )
-        const descriptionOpacity = k > 1.3 ? 1 : 0
+        const levelTwoLabelsOpacity = k > 1.3 ? 1 : 0
 
-        description
+        levelTwoLabels
           .attr('transform', ({ time }) => `translate(${x + time * k}, 10 )`)
-          .attr('opacity', descriptionOpacity)
+          .attr('opacity', levelTwoLabelsOpacity)
       })
 
     svg.call(zoom)
